@@ -21,7 +21,7 @@ const Container = styled.div`
   flex-direction: row;
 `;
 
-const Bookmarks = styled.a`
+const Bookmarks = styled.div`
   flex: 2;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ const Folder = styled.div`
   }
 `;
 
-const Bookmark = styled.div`
+const Bookmark = styled.a`
   cursor: pointer;
   padding: 0.2rem;
   &:hover {
