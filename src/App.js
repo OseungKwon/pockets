@@ -2,7 +2,10 @@
 import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import BookMarks from "./components/bookmark";
+import MostVisited from "./components/mostVisitied";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -11,22 +14,8 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
-const Topbar = styled.div`
-  margin: 1rem 1rem 0.5rem 1rem;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: row;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-`;
-
-const Stack = styled.div`
-  cursor: pointer;
-  padding: 0.2rem;
-`;
-
 const Container = styled.div`
-  margin: 1rem;
+  margin: 0.5rem 1rem;
   background: #fff;
   box-shadow: 1px 4px 4px 0 rgb(117 121 125 / 6%),
     0 1px 3px 0 rgb(113 117 121 / 20%);
@@ -35,63 +24,15 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const MostVisited = styled.div`
-  flex: 2 2 3rem;
-  padding: 1rem;
-  height: 10rem;
-  overflow: scroll;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
+const TitleImg = styled.img`
+  margin-right: 0.6rem;
 `;
 
-const Bookmarks = styled.div`
-  flex: 5 5 20rem;
-  padding: 1rem;
+const Menu = styled.div`
+  font-size: 15px;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: scroll;
-`;
-
-const Folder = styled.div`
-  cursor: pointer;
-  padding: 0.2rem;
-  &:hover {
-    background-color: rgba(117, 221, 255, 0.77);
-  }
-`;
-
-const Bookmark = styled.a`
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-  white-space: nowrap;
-  padding: 0.2rem;
-  margin: 0.1rem;
-  display: flex;
-  &:hover {
-    background-color: rgba(117, 221, 255, 0.77);
-  }
-`;
-
-const Icon = styled.img`
-  width: 40px;
-  height: 40px;
-`;
-
-const Favicon = styled.img`
-  margin-right: 0.2rem;
-`;
-
-const H2 = styled.div`
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin: 0 1rem;
-  padding: 0.8rem 0rem;
-  border-bottom: 1px solid #ccc;
+  margin: 1rem;
 `;
 
 const Title = styled.div`
@@ -101,8 +42,17 @@ const Title = styled.div`
   font-family: "Chewy", cursive;
 `;
 
-const TitleImg = styled.img`
-  margin-right: 0.6rem;
+const Button = styled.div`
+  margin: 0.5rem 0;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  &:hover {
+    transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
+    color: #fff;
+    background-color: #000;
+  }
 `;
 
 function getTabData(callback) {
@@ -118,19 +68,38 @@ const App = () => {
   const [folders, setFolders] = useState([]);
   const [topSites, setTopSites] = useState([]);
 
-  const clickBtn = async () => {
-    const title = prompt("추가할 북마크 이름을 입력하세요");
-
+  const addCurrentBookmark = async () => {
     getTabData(function (tabdata) {
-      chrome.bookmarks
-        .create({
-          title: title,
-          url: tabdata.url,
-          parentId: stack[stack.length - 1].id
-        })
-        .then(alert("성공적으로 추가하였습니다."));
+      const title = prompt(
+        "추가할 북마크 이름을 입력하세요",
+        tabdata.title.slice(0, 35)
+      );
+      title !== null
+        ? chrome.bookmarks
+            .create({
+              title: title,
+              url: tabdata.url,
+              parentId: stack[stack.length - 1].id
+            })
+            .then(alert("성공적으로 추가하였습니다."))
+        : alert("북마크 추가 실패");
     });
+
     window.location.reload();
+  };
+
+  const addAppointedBookMark = () => {
+    const title = prompt("추가할 북마크 이름을 입력하세요");
+    const url = prompt("추가할 url 주소를 입력하세요.");
+    title !== null && url !== null
+      ? chrome.bookmarks
+          .create({
+            title: title,
+            url: url,
+            parentId: stack[stack.length - 1].id
+          })
+          .then(alert("성공적으로 추가하였습니다."))
+      : alert("북마크 추가 실패");
   };
 
   const onClickRoute = (id) => {
@@ -212,74 +181,27 @@ const App = () => {
       </Title>
 
       <Container>
-        <H2>bookmark</H2>
-        <Topbar>
-          {stack.map((el) => (
-            <Stack
-              onClick={() => {
-                onClickRoute(el.id);
-              }}
-            >
-              &gt; 📂{el.title}
-            </Stack>
-          ))}
-        </Topbar>
-        <Bookmarks>
-          {folders
-            .filter((el) => el.parentId === String(stack[stack.length - 1].id))
-            .map((folder) => (
-              <Folder
-                onClick={() => {
-                  onClickFolder(folder.id, folder.title);
-                }}
-              >
-                📒 {folder.title}
-              </Folder>
-            ))}
-          {bookmarks
-            .filter((el) => el.parentId === String(stack[stack.length - 1].id))
-            .map((bookmark) => (
-              <Bookmark
-                href={bookmark.url}
-                target="_blank"
-                title={bookmark.title}
-              >
-                <Favicon
-                  src={
-                    "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                    bookmark.url +
-                    "&size=16"
-                  }
-                  alt=""
-                />{" "}
-                {bookmark.title}
-              </Bookmark>
-            ))}
-        </Bookmarks>
+        <BookMarks
+          stack={stack}
+          onClickRoute={onClickRoute}
+          folders={folders}
+          onClickFolder={onClickFolder}
+          bookmarks={bookmarks}
+        />
       </Container>
       <Container>
-        <H2>most viewed</H2>
-        <MostVisited>
-          {topSites.slice(0, 5).map((topSite) => (
-            <a
-              href={topSite.url}
-              title={topSite.title}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Icon
-                src={
-                  "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                  topSite.url +
-                  "&size=48"
-                }
-                alt=""
-              />
-            </a>
-          ))}
-        </MostVisited>
+        <MostVisited topSites={topSites} />
       </Container>
-      <button onClick={clickBtn}>현재 페이지 북마크</button>
+      <Container>
+        <Menu>
+          <Button onClick={addCurrentBookmark}>
+            <FontAwesomeIcon icon={faBookmark} /> 현재 페이지 북마크
+          </Button>
+          <Button onClick={addAppointedBookMark}>
+            <FontAwesomeIcon icon={faBookmark} /> 페이지 지정 북마크
+          </Button>
+        </Menu>
+      </Container>
     </Wrapper>
   );
 };
