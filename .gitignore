@@ -10,7 +10,9 @@
 
 # production
 /build
-build
+build.pem
+build.whx
+build.zip
 
 # misc
 .DS_Store
