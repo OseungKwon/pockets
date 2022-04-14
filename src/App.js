@@ -105,6 +105,12 @@ const TitleImg = styled.img`
   margin-right: 0.6rem;
 `;
 
+function getTabData(callback) {
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+    callback(tabs[0]);
+  });
+}
+
 const App = () => {
   //const data = useSelector((state) => state.bookmark.boomarks);
   const [stack, setStack] = useState([{ id: 0, title: "root" }]);
@@ -114,28 +120,17 @@ const App = () => {
 
   const clickBtn = async () => {
     const title = prompt("추가할 북마크 이름을 입력하세요");
-    const data = [];
-    await chrome.tabs.query(
-      { active: true, currentWindow: true },
-      function (tabs) {
-        var activeTab = tabs[0];
-        console.log("aa", activeTab);
-        data.push(activeTab.id);
-      }
-    );
 
-    console.log("dd", data);
-
-    // url === ""
-    //   ? await chrome.bookmarks
-    //       .create({
-    //         title: title,
-    //         url: url,
-    //         parentId: stack[stack.length - 1].id
-    //       })
-    //       .then(alert("성공적으로 추가하였습니다."))
-    //   : alert("에러 발생");
-    // window.location.reload();
+    getTabData(function (tabdata) {
+      chrome.bookmarks
+        .create({
+          title: title,
+          url: tabdata.url,
+          parentId: stack[stack.length - 1].id
+        })
+        .then(alert("성공적으로 추가하였습니다."));
+    });
+    window.location.reload();
   };
 
   const onClickRoute = (id) => {
