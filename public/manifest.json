@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "pocket",
   "version": "1.0.0",
   "description": "포켓: 북마크 관리를 쉽고 간편하게",
@@ -10,9 +10,6 @@
       "32": "favicon-32x32.png",
       "96": "favicon-96x96.png"
     }
-  },
-  "background": {
-    "service_worker": "background.js"
   },
   "permissions": ["bookmarks", "tabs", "topSites", "storage"]
 }
