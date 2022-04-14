@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+
 import BookMarks from "./components/bookmark";
+import BookMarkButtons from "./components/bookmarkButtons";
 import MostVisited from "./components/mostVisitied";
 const Wrapper = styled.div`
   display: flex;
@@ -14,25 +16,8 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
-const Container = styled.div`
-  margin: 0.5rem 1rem;
-  background: #fff;
-  box-shadow: 1px 4px 4px 0 rgb(117 121 125 / 6%),
-    0 1px 3px 0 rgb(113 117 121 / 20%);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const TitleImg = styled.img`
+const TitleIcon = styled.span`
   margin-right: 0.6rem;
-`;
-
-const Menu = styled.div`
-  font-size: 15px;
-  display: flex;
-  flex-direction: column;
-  margin: 1rem;
 `;
 
 const Title = styled.div`
@@ -40,19 +25,6 @@ const Title = styled.div`
   font-size: 1.4rem;
   font-weight: 500;
   font-family: "Chewy", cursive;
-`;
-
-const Button = styled.div`
-  margin: 0.5rem 0;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  &:hover {
-    transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
-    color: #fff;
-    background-color: #000;
-  }
 `;
 
 function getTabData(callback) {
@@ -88,9 +60,9 @@ const App = () => {
     window.location.reload();
   };
 
-  const addAppointedBookMark = () => {
+  const addAppointedBookmark = () => {
     const title = prompt("추가할 북마크 이름을 입력하세요");
-    const url = prompt("추가할 url 주소를 입력하세요.");
+    const url = prompt("추가할 url 주소를 입력하세요.", "https://");
     title !== null && url !== null
       ? chrome.bookmarks
           .create({
@@ -100,6 +72,8 @@ const App = () => {
           })
           .then(alert("성공적으로 추가하였습니다."))
       : alert("북마크 추가 실패");
+
+    window.location.reload();
   };
 
   const onClickRoute = (id) => {
@@ -176,32 +150,24 @@ const App = () => {
   return (
     <Wrapper>
       <Title>
-        <TitleImg src="/favicon-32x32.png" alt="pocket" sizes="70x70" />
+        <TitleIcon>
+          <FontAwesomeIcon icon={faFolderOpen} />
+        </TitleIcon>
         Pocket
       </Title>
 
-      <Container>
-        <BookMarks
-          stack={stack}
-          onClickRoute={onClickRoute}
-          folders={folders}
-          onClickFolder={onClickFolder}
-          bookmarks={bookmarks}
-        />
-      </Container>
-      <Container>
-        <MostVisited topSites={topSites} />
-      </Container>
-      <Container>
-        <Menu>
-          <Button onClick={addCurrentBookmark}>
-            <FontAwesomeIcon icon={faBookmark} /> 현재 페이지 북마크
-          </Button>
-          <Button onClick={addAppointedBookMark}>
-            <FontAwesomeIcon icon={faBookmark} /> 페이지 지정 북마크
-          </Button>
-        </Menu>
-      </Container>
+      <BookMarks
+        stack={stack}
+        onClickRoute={onClickRoute}
+        folders={folders}
+        onClickFolder={onClickFolder}
+        bookmarks={bookmarks}
+      />
+      <MostVisited topSites={topSites} />
+      <BookMarkButtons
+        addCurrentBookmark={addCurrentBookmark}
+        addAppointedBookmark={addAppointedBookmark}
+      />
     </Wrapper>
   );
 };

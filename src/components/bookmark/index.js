@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { H2 } from "../common/style";
+import { Container, H2 } from "../common/style";
 
 const Favicon = styled.img`
   margin-right: 0.2rem;
@@ -68,7 +68,7 @@ const BookMarks = ({
   bookmarks
 }) => {
   return (
-    <>
+    <Container>
       <H2>bookmark</H2>
       <Topbar>
         {stack.map((el) => (
@@ -113,7 +113,7 @@ const BookMarks = ({
             </Bookmark>
           ))}
       </Space>
-    </>
+    </Container>
   );
 };
 

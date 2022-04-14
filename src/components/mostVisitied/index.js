@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { H2 } from "../common/style";
+import { H2, Container } from "../common/style";
 const Space = styled.div`
   flex: 2 2 4rem;
   padding: 1rem;
@@ -25,7 +25,7 @@ const Icon = styled.img`
 
 const MostVisited = ({ topSites }) => {
   return (
-    <>
+    <Container>
       <H2>most viewed</H2>
       <Space>
         {topSites.slice(0, 5).map((topSite) => (
@@ -46,7 +46,7 @@ const MostVisited = ({ topSites }) => {
           </a>
         ))}
       </Space>
-    </>
+    </Container>
   );
 };
 
