@@ -7,5 +7,5 @@
     "default_popup": "index.html",
     "default_title": "Pocket"
   },
-  "permissions": ["bookmarks", "tabs"]
+  "permissions": ["bookmarks", "tabs", "topSites"]
 }

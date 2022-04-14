@@ -28,16 +28,18 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const Folders = styled.div`
-  height: 100%;
-  flex: 1;
+const MostVisited = styled.div`
+  height: 30%;
+  overflow: scroll;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
 `;
 
 const Bookmarks = styled.div`
-  height: 100%;
-  flex: 3;
+  height: 70%;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -58,9 +60,21 @@ const Bookmark = styled.a`
   cursor: pointer;
   white-space: nowrap;
   padding: 0.2rem;
+  display: flex;
   &:hover {
     background-color: rgba(117, 221, 255, 0.77);
   }
+`;
+
+const Icon = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+
+const Title = styled.div`
+  width: 100%;
+  height: 1rem;
+  border: 1px solid black;
 `;
 
 const App = () => {
@@ -70,6 +84,7 @@ const App = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [folders, setFolders] = useState([]);
   const [number, setNumber] = useState([1, 2, 3]);
+  const [topSites, setTopSites] = useState([]);
 
   const clickBtn = () => {
     console.log(bookmarks);
@@ -96,11 +111,14 @@ const App = () => {
     async function fetchData() {
       const folder = [];
       const bookmark = [];
+
       await chrome.bookmarks.getTree(function (bmTree) {
         bmTree.forEach(function (node) {
           processNode(node);
         });
       });
+      setOrigin(bookmark);
+      setFolders(folder);
 
       function processNode(node) {
         if (node.children) {
@@ -123,17 +141,24 @@ const App = () => {
           bookmark.push(temp);
         }
       }
-      console.log("a", folder);
-      console.log("b", bookmark);
-      await setOrigin(bookmark);
-      await setFolders(folder);
     }
     fetchData();
   }, []);
 
   useEffect(() => {
+    const topSite = [];
+    chrome.topSites.get(top_site);
+    function top_site(urls) {
+      topSite.push(...urls);
+    }
+
+    setTopSites(topSite);
+  }, []);
+
+  useEffect(() => {
     setBookmarks(origin);
   }, [origin]);
+
   return (
     <Wrapper>
       <button onClick={clickBtn}>버튼</button>
@@ -149,6 +174,7 @@ const App = () => {
         ))}
       </Topbar>
       <Container>
+        <Title>bookmark</Title>
         <Bookmarks>
           {folders
             .filter((el) => el.parentId === String(stack[stack.length - 1].id))
@@ -169,11 +195,38 @@ const App = () => {
                 target="_blank"
                 title={bookmark.title}
               >
-                📄 {bookmark.title}
+                <img
+                  src={
+                    "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
+                    bookmark.url +
+                    "&size=16"
+                  }
+                  alt=""
+                />{" "}
+                {bookmark.title}
               </Bookmark>
             ))}
         </Bookmarks>
-        <Folders></Folders>
+        <Title>most viewed</Title>
+        <MostVisited>
+          {topSites.slice(0, 5).map((topSite) => (
+            <a
+              href={topSite.url}
+              title={topSite.title}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Icon
+                src={
+                  "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
+                  topSite.url +
+                  "&size=48"
+                }
+                alt=""
+              />
+            </a>
+          ))}
+        </MostVisited>
       </Container>
     </Wrapper>
   );
