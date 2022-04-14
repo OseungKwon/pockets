@@ -86,7 +86,7 @@ const Favicon = styled.img`
   margin-right: 0.2rem;
 `;
 
-const Title = styled.div`
+const H2 = styled.div`
   font-size: 1.2rem;
   font-weight: 500;
   margin: 0 1rem;
@@ -94,24 +94,48 @@ const Title = styled.div`
   border-bottom: 1px solid #ccc;
 `;
 
+const Title = styled.div`
+  margin: 1rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-family: "Chewy", cursive;
+`;
+
+const TitleImg = styled.img`
+  margin-right: 0.6rem;
+`;
+
 const App = () => {
   //const data = useSelector((state) => state.bookmark.boomarks);
   const [stack, setStack] = useState([{ id: 0, title: "root" }]);
-  const [origin, setOrigin] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [folders, setFolders] = useState([]);
-  const [number, setNumber] = useState([1, 2, 3]);
   const [topSites, setTopSites] = useState([]);
 
-  const clickBtn = () => {
-    console.log(bookmarks);
-    setNumber([...number, 5]);
-    console.log("stack", stack);
-    // chrome.bookmarks.create({
-    //   title: "Extension bookmarks",
-    //   url: "https://developer.chrome.com/docs/extensions"
-    // });
-    alert("123");
+  const clickBtn = async () => {
+    const title = prompt("추가할 북마크 이름을 입력하세요");
+    const data = [];
+    await chrome.tabs.query(
+      { active: true, currentWindow: true },
+      function (tabs) {
+        var activeTab = tabs[0];
+        console.log("aa", activeTab);
+        data.push(activeTab.id);
+      }
+    );
+
+    console.log("dd", data);
+
+    // url === ""
+    //   ? await chrome.bookmarks
+    //       .create({
+    //         title: title,
+    //         url: url,
+    //         parentId: stack[stack.length - 1].id
+    //       })
+    //       .then(alert("성공적으로 추가하였습니다."))
+    //   : alert("에러 발생");
+    // window.location.reload();
   };
 
   const onClickRoute = (id) => {
@@ -121,7 +145,6 @@ const App = () => {
   };
 
   const onClickFolder = (id, title) => {
-    setBookmarks(origin.filter((bookmark) => bookmark.parentId === id));
     setStack([...stack, { id: id, title: title }]);
     chrome.storage.sync.set({
       bookmarkStack: [...stack, { id: id, title: title }]
@@ -138,7 +161,7 @@ const App = () => {
           processNode(node);
         });
       });
-      setOrigin(bookmark);
+      setBookmarks(bookmark);
       setFolders(folder);
 
       function processNode(node) {
@@ -186,16 +209,15 @@ const App = () => {
     });
   }, []);
 
-  useEffect(() => {
-    setBookmarks(origin);
-  }, [origin]);
-
   return (
     <Wrapper>
-      <button onClick={clickBtn}>버튼</button>
+      <Title>
+        <TitleImg src="/favicon-32x32.png" alt="pocket" sizes="70x70" />
+        Pocket
+      </Title>
 
       <Container>
-        <Title>bookmark</Title>
+        <H2>bookmark</H2>
         <Topbar>
           {stack.map((el) => (
             <Stack
@@ -203,7 +225,7 @@ const App = () => {
                 onClickRoute(el.id);
               }}
             >
-              📂{el.title}
+              &gt; 📂{el.title}
             </Stack>
           ))}
         </Topbar>
@@ -219,7 +241,7 @@ const App = () => {
                 📒 {folder.title}
               </Folder>
             ))}
-          {origin
+          {bookmarks
             .filter((el) => el.parentId === String(stack[stack.length - 1].id))
             .map((bookmark) => (
               <Bookmark
@@ -241,7 +263,7 @@ const App = () => {
         </Bookmarks>
       </Container>
       <Container>
-        <Title>most viewed</Title>
+        <H2>most viewed</H2>
         <MostVisited>
           {topSites.slice(0, 5).map((topSite) => (
             <a
@@ -262,6 +284,7 @@ const App = () => {
           ))}
         </MostVisited>
       </Container>
+      <button onClick={clickBtn}>현재 페이지 북마크</button>
     </Wrapper>
   );
 };
