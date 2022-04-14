@@ -6,30 +6,39 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 20rem;
-  height: 30rem;
+  background: #f8f8f8;
+  width: 100%;
+  height: 100vh;
 `;
 
 const Topbar = styled.div`
-  margin: 0.5rem;
+  margin: 1rem 1rem 0.5rem 1rem;
   padding: 0.5rem;
   display: flex;
   flex-direction: row;
-  border: 1px solid #c7c7c7;
-  > {
-    padding: 0 0.2rem;
-  }
+  border: 1px solid #ccc;
+  border-radius: 6px;
+`;
+
+const Stack = styled.div`
+  cursor: pointer;
+  padding: 0.2rem;
 `;
 
 const Container = styled.div`
-  height: 100%;
-  width: 100%;
+  margin: 1rem;
+  background: #fff;
+  box-shadow: 1px 4px 4px 0 rgb(117 121 125 / 6%),
+    0 1px 3px 0 rgb(113 117 121 / 20%);
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
 `;
 
 const MostVisited = styled.div`
-  height: 30%;
+  flex: 2 2 3rem;
+  padding: 1rem;
+  height: 10rem;
   overflow: scroll;
   display: flex;
   flex-direction: row;
@@ -39,7 +48,8 @@ const MostVisited = styled.div`
 `;
 
 const Bookmarks = styled.div`
-  height: 70%;
+  flex: 5 5 20rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -60,6 +70,7 @@ const Bookmark = styled.a`
   cursor: pointer;
   white-space: nowrap;
   padding: 0.2rem;
+  margin: 0.1rem;
   display: flex;
   &:hover {
     background-color: rgba(117, 221, 255, 0.77);
@@ -71,10 +82,16 @@ const Icon = styled.img`
   height: 40px;
 `;
 
+const Favicon = styled.img`
+  margin-right: 0.2rem;
+`;
+
 const Title = styled.div`
-  width: 100%;
-  height: 1rem;
-  border: 1px solid black;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0 1rem;
+  padding: 0.8rem 0rem;
+  border-bottom: 1px solid #ccc;
 `;
 
 const App = () => {
@@ -100,11 +117,15 @@ const App = () => {
   const onClickRoute = (id) => {
     const idx = stack.findIndex((el) => el.id === id);
     setStack(stack.slice(0, idx + 1));
+    chrome.storage.sync.set({ bookmarkStack: stack.slice(0, idx + 1) });
   };
 
   const onClickFolder = (id, title) => {
     setBookmarks(origin.filter((bookmark) => bookmark.parentId === id));
     setStack([...stack, { id: id, title: title }]);
+    chrome.storage.sync.set({
+      bookmarkStack: [...stack, { id: id, title: title }]
+    });
   };
 
   useEffect(() => {
@@ -156,25 +177,36 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    chrome.storage.sync.get("bookmarkStack", ({ bookmarkStack }) => {
+      if (bookmarkStack) {
+        setStack(bookmarkStack);
+      } else {
+        chrome.storage.sync.set({ bookmarkStack: stack });
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     setBookmarks(origin);
   }, [origin]);
 
   return (
     <Wrapper>
       <button onClick={clickBtn}>버튼</button>
-      <Topbar>
-        {stack.map((el) => (
-          <div
-            onClick={() => {
-              onClickRoute(el.id);
-            }}
-          >
-            📂{el.title}
-          </div>
-        ))}
-      </Topbar>
+
       <Container>
         <Title>bookmark</Title>
+        <Topbar>
+          {stack.map((el) => (
+            <Stack
+              onClick={() => {
+                onClickRoute(el.id);
+              }}
+            >
+              📂{el.title}
+            </Stack>
+          ))}
+        </Topbar>
         <Bookmarks>
           {folders
             .filter((el) => el.parentId === String(stack[stack.length - 1].id))
@@ -195,7 +227,7 @@ const App = () => {
                 target="_blank"
                 title={bookmark.title}
               >
-                <img
+                <Favicon
                   src={
                     "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
                     bookmark.url +
@@ -207,6 +239,8 @@ const App = () => {
               </Bookmark>
             ))}
         </Bookmarks>
+      </Container>
+      <Container>
         <Title>most viewed</Title>
         <MostVisited>
           {topSites.slice(0, 5).map((topSite) => (

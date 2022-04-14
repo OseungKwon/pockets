@@ -3,9 +3,11 @@
   "name": "pocket",
   "version": "1.0.0",
   "description": "포켓: 북마크 관리를 쉽고 간편하게",
-  "action": {
-    "default_popup": "index.html",
-    "default_title": "Pocket"
+  "sidebar_action": {
+    "default_page": "index.html",
+    "default_icon": {
+      "16": "logo192.png"
+    }
   },
-  "permissions": ["bookmarks", "tabs", "topSites"]
+  "permissions": ["bookmarks", "tabs", "topSites", "storage"]
 }
