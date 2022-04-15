@@ -1,17 +1,18 @@
-/* eslint-disable no-undef */
 import { useState, useRef, useEffect } from "react";
+
+const defaultData = {
+  top: "",
+  left: "",
+  className: "",
+  id: ""
+};
 
 const useContextMenu = () => {
   const [open, setOpen] = useState(false);
-
-  const [elementData, setElementData] = useState({
-    top: "",
-    left: "",
-    className: "",
-    id: ""
-  });
+  const [elementData, setElementData] = useState(defaultData);
   const modalRef = useRef();
 
+  // context menu 활성화
   const onContextMenu = (e) => {
     e.preventDefault();
     setOpen(true);
@@ -24,29 +25,34 @@ const useContextMenu = () => {
     console.log(e);
   };
 
-  const handleClickOutside = ({ target }) => {
+  // context menu 바깥 클릭
+  const onClickOutside = ({ target }) => {
     if (open && !modalRef.current.contains(target)) {
       setOpen(false);
-      setElementData({ top: "", left: "", className: "", id: "" });
+      setElementData(defaultData);
     }
   };
 
+  // 북마크 삭제
   const onRemoveBookmark = () => {
     if (elementData.className.includes("bookmark")) {
       if (window.confirm("북마크 삭제"))
+        // eslint-disable-next-line no-undef
         chrome.bookmarks.remove(elementData.id);
     } else if (elementData.className.includes("folder")) {
+      // eslint-disable-next-line no-undef
       if (window.confirm("폴더 삭제")) chrome.bookmarks.remove(elementData.id);
     }
     setOpen(false);
     window.location.reload();
   };
 
+  // context menu는 우클릭하면 보여짐
   useEffect(() => {
     if (open) {
-      window.addEventListener("click", handleClickOutside);
+      window.addEventListener("click", onClickOutside);
       return () => {
-        window.removeEventListener("click", handleClickOutside);
+        window.removeEventListener("click", onClickOutside);
       };
     }
   });

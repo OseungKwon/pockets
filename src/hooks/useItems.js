@@ -5,6 +5,7 @@ const useItems = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [folders, setFolders] = useState([]);
   const [topSites, setTopSites] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       const folder = [];
