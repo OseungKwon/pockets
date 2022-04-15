@@ -88,6 +88,7 @@ const BookMarks = ({
           .filter((el) => el.parentId === String(stack[stack.length - 1].id))
           .map((folder) => (
             <Folder
+              className="folder"
               onClick={() => {
                 onClickFolder(folder.id, folder.title);
               }}
@@ -99,6 +100,7 @@ const BookMarks = ({
           .filter((el) => el.parentId === String(stack[stack.length - 1].id))
           .map((bookmark) => (
             <Bookmark
+              className="bookmark"
               href={bookmark.url}
               target="_blank"
               title={bookmark.title}

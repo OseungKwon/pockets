@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import BookMarks from "./components/bookmark";
 import BookMarkButtons from "./components/bookmarkButtons";
 import MostVisited from "./components/mostVisitied";
+import ContextMenu from "./components/contextMenu";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,6 +40,30 @@ const App = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [folders, setFolders] = useState([]);
   const [topSites, setTopSites] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [elementData, setElementData] = useState({
+    top: "",
+    left: "",
+    className: ""
+  });
+  const modalRef = useRef();
+
+  const onContextMenu = (e) => {
+    e.preventDefault();
+    setOpen(true);
+    setElementData({
+      left: e.clientX,
+      top: e.clientY,
+      className: e.target.className
+    });
+    console.log(e);
+  };
+
+  const handleClickOutside = ({ target }) => {
+    console.log("outside", target);
+    console.log("ref", modalRef);
+    if (open && !modalRef.current.contains(target)) setOpen(false);
+  };
 
   const addCurrentBookmark = async () => {
     getTabData(function (tabdata) {
@@ -88,6 +113,15 @@ const App = () => {
       bookmarkStack: [...stack, { id: id, title: title }]
     });
   };
+
+  useEffect(() => {
+    if (open) {
+      window.addEventListener("click", handleClickOutside);
+      return () => {
+        window.removeEventListener("click", handleClickOutside);
+      };
+    }
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -148,27 +182,30 @@ const App = () => {
   }, []);
 
   return (
-    <Wrapper>
-      <Title>
-        <TitleIcon>
-          <FontAwesomeIcon icon={faFolderOpen} />
-        </TitleIcon>
-        Pocket
-      </Title>
+    <>
+      <Wrapper onContextMenu={onContextMenu}>
+        <Title>
+          <TitleIcon>
+            <FontAwesomeIcon icon={faFolderOpen} />
+          </TitleIcon>
+          Pocket
+        </Title>
 
-      <BookMarks
-        stack={stack}
-        onClickRoute={onClickRoute}
-        folders={folders}
-        onClickFolder={onClickFolder}
-        bookmarks={bookmarks}
-      />
-      <MostVisited topSites={topSites} />
-      <BookMarkButtons
-        addCurrentBookmark={addCurrentBookmark}
-        addAppointedBookmark={addAppointedBookmark}
-      />
-    </Wrapper>
+        <BookMarks
+          stack={stack}
+          onClickRoute={onClickRoute}
+          folders={folders}
+          onClickFolder={onClickFolder}
+          bookmarks={bookmarks}
+        />
+        <MostVisited topSites={topSites} />
+        <BookMarkButtons
+          addCurrentBookmark={addCurrentBookmark}
+          addAppointedBookmark={addAppointedBookmark}
+        />
+      </Wrapper>
+      {open && <ContextMenu modalRef={modalRef} elementData={elementData} />}
+    </>
   );
 };
 
