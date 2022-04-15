@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState, useRef } from "react";
-
+import useContextMenu from "./hooks/useContextMenu";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
@@ -40,33 +40,9 @@ const App = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [folders, setFolders] = useState([]);
   const [topSites, setTopSites] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [elementData, setElementData] = useState({
-    top: "",
-    left: "",
-    className: "",
-    id: ""
-  });
-  const modalRef = useRef();
 
-  const onContextMenu = (e) => {
-    e.preventDefault();
-    setOpen(true);
-    setElementData({
-      left: e.clientX,
-      top: e.clientY,
-      className: e.target.className,
-      id: e.target.id
-    });
-    console.log(e);
-  };
-
-  const handleClickOutside = ({ target }) => {
-    if (open && !modalRef.current.contains(target)) {
-      setOpen(false);
-      setElementData({ top: "", left: "", className: "", id: "" });
-    }
-  };
+  const [open, elementData, modalRef, onContextMenu, onRemoveBookmark] =
+    useContextMenu();
 
   const addCurrentBookmark = async () => {
     getTabData(function (tabdata) {
@@ -126,15 +102,6 @@ const App = () => {
       bookmarkStack: [...stack, { id: id, title: title }]
     });
   };
-
-  useEffect(() => {
-    if (open) {
-      window.addEventListener("click", handleClickOutside);
-      return () => {
-        window.removeEventListener("click", handleClickOutside);
-      };
-    }
-  });
 
   useEffect(() => {
     async function fetchData() {
@@ -224,7 +191,7 @@ const App = () => {
           modalRef={modalRef}
           elementData={elementData}
           addAppointedBookmark={addAppointedBookmark}
-          setOpen={setOpen}
+          onRemoveBookmark={onRemoveBookmark}
         />
       )}
     </>

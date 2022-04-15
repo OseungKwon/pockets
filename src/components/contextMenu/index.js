@@ -48,21 +48,10 @@ const ContextMenu = ({
   modalRef,
   elementData,
   addAppointedBookmark,
-  setOpen,
+  onRemoveBookmark,
   addFolder
 }) => {
   console.log("position", elementData.className);
-
-  const onRemoveBookmark = () => {
-    if (elementData.className.includes("bookmark")) {
-      if (window.confirm("북마크 삭제"))
-        chrome.bookmarks.remove(elementData.id);
-    } else if (elementData.className.includes("folder")) {
-      if (window.confirm("폴더 삭제")) chrome.bookmarks.remove(elementData.id);
-    }
-    setOpen(false);
-    window.location.reload();
-  };
 
   return (
     <Menu ref={modalRef} elementData={elementData}>
