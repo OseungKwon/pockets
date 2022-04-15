@@ -20,7 +20,7 @@ const Item = styled.div`
   padding: 0.2rem 0.1rem;
   cursor: pointer;
   border-radius: 6px;
-  :hover:focus {
+  :hover {
     background: #eee;
   }
 `;
@@ -36,18 +36,13 @@ const ContextMenu = ({
 
   const onRemoveBookmark = () => {
     if (elementData.className.includes("bookmark")) {
-      chrome.bookmarks.remove(elementData.id);
-      alert("북마크 삭제");
-      setOpen(false);
-      window.location.reload();
+      if (window.confirm("북마크 삭제"))
+        chrome.bookmarks.remove(elementData.id);
     } else if (elementData.className.includes("folder")) {
-      chrome.bookmarks.remove(elementData.id);
-      alert("폴더 삭제");
-      setOpen(false);
-      window.location.reload();
-    } else {
-      alert("북마크를 클릭해주세요.");
+      if (window.confirm("폴더 삭제")) chrome.bookmarks.remove(elementData.id);
     }
+    setOpen(false);
+    window.location.reload();
   };
 
   const onAddBookmark = () => {
@@ -56,8 +51,11 @@ const ContextMenu = ({
 
   return (
     <Menu ref={modalRef} elementData={elementData}>
-      <Item onClick={onRemoveBookmark}>삭제</Item>
-      <Item onClick={onAddBookmark}>페이지 추가</Item>
+      {(elementData.className.includes("bookmark") ||
+        elementData.className.includes("folder")) && (
+        <Item onClick={onRemoveBookmark}>삭제</Item>
+      )}
+      <Item onClick={onAddBookmark}>북마크 추가</Item>
       <Item>폴더 추가</Item>
     </Menu>
   );
