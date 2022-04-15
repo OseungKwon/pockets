@@ -7,11 +7,11 @@ const Favicon = styled.img`
 `;
 
 const Bookmark = styled.a`
+  font-size: 13px;
   color: #000;
   text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
-  margin: 0.1rem;
   display: flex;
   cursor: pointer;
   padding: 0.3rem;
@@ -24,6 +24,7 @@ const Bookmark = styled.a`
 `;
 
 const Topbar = styled.div`
+  font-size: 13px;
   margin: 1rem 1rem 0.5rem 1rem;
   padding: 0.5rem;
   display: flex;
@@ -45,7 +46,7 @@ const Stack = styled.div`
 
 const Space = styled.div`
   flex: 5 5 20rem;
-  padding: 1rem;
+  padding: 0 1rem 1rem 1rem;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -53,9 +54,9 @@ const Space = styled.div`
 `;
 
 const Folder = styled.div`
+  font-size: 13px;
   cursor: pointer;
   padding: 0.3rem;
-  margin: 0.1rem;
   border-radius: 6px;
   &:hover {
     background-color: #eee;
@@ -115,11 +116,7 @@ const BookMarks = ({
               focus={elementData.id === bookmark.id}
             >
               <Favicon
-                src={
-                  "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                  bookmark.url +
-                  "&size=16"
-                }
+                src={"chrome://favicon/size/16@1x/" + bookmark.url}
                 alt=""
               />{" "}
               {bookmark.title}

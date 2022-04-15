@@ -35,14 +35,7 @@ const MostVisited = ({ topSites }) => {
             target="_blank"
             rel="noreferrer"
           >
-            <Icon
-              src={
-                "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                topSite.url +
-                "&size=48"
-              }
-              alt=""
-            />
+            <Icon src={"chrome://favicon/size/36@1x/" + topSite.url} alt="" />
           </a>
         ))}
       </Space>

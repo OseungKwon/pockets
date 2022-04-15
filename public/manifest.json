@@ -11,5 +11,12 @@
       "96": "favicon-96x96.png"
     }
   },
-  "permissions": ["bookmarks", "tabs", "topSites", "storage"]
+  "permissions": [
+    "bookmarks",
+    "tabs",
+    "topSites",
+    "storage",
+    "chrome://favicon/"
+  ],
+  "content_security_policy": "img-src chrome://favicon;"
 }
