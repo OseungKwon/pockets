@@ -14,9 +14,9 @@ import {
 const ContextMenu = ({
   modalRef,
   elementData,
-  addAppointedBookmark,
-  onRemoveBookmark,
-  addFolder
+  onAddFolder,
+  onAddUserB,
+  onRemoveB
 }) => {
   console.log("position", elementData.className);
 
@@ -24,20 +24,20 @@ const ContextMenu = ({
     <Menu ref={modalRef} elementData={elementData}>
       {(elementData.className.includes("bookmark") ||
         elementData.className.includes("folder")) && (
-        <Item onClick={onRemoveBookmark} style={{ color: "red" }}>
+        <Item onClick={onRemoveB} style={{ color: "red" }}>
           <Icon>
             <FontAwesomeIcon icon={faTrashCan} />
           </Icon>
           <Span>삭제</Span>
         </Item>
       )}
-      <Item onClick={addAppointedBookmark}>
+      <Item onClick={onAddUserB}>
         <Icon>
           <FontAwesomeIcon icon={faBookmark} />
         </Icon>
         <Span>북마크 추가</Span>
       </Item>
-      <Item onClick={addFolder}>
+      <Item onClick={onAddFolder}>
         <Icon>
           <FontAwesomeIcon icon={faFolderPlus} />
         </Icon>

@@ -24,11 +24,10 @@ const App = () => {
 
   const [stack, onClickRoute, onClickFolder] = useBookmarkStack();
 
-  const [open, elementData, modalRef, onContextMenu, onRemoveBookmark] =
+  const [isOpen, elementData, modalRef, onContextMenu, onRemoveB] =
     useContextMenu();
 
-  const [addCurrentBookmark, addAppointedBookmark, addFolder] =
-    useAddBookmark(stack);
+  const [onAddCurB, onAddUserB, onAddFolder] = useAddBookmark(stack);
 
   return (
     <>
@@ -39,28 +38,28 @@ const App = () => {
           </TitleIcon>
           Pocket
         </Title>
-
+        {/* 북마크 area */}
         <BookMarks
           stack={stack}
-          onClickRoute={onClickRoute}
-          folders={folders}
-          onClickFolder={onClickFolder}
           bookmarks={bookmarks}
+          folders={folders}
           elementData={elementData}
+          onClickRoute={onClickRoute}
+          onClickFolder={onClickFolder}
         />
+        {/* 가장 많이 방문한 사이트 area */}
         <MostVisited topSites={topSites} />
-        <BookMarkButtons
-          addCurrentBookmark={addCurrentBookmark}
-          addAppointedBookmark={addAppointedBookmark}
-        />
+        {/* 북마크 추가 버튼 area */}
+        <BookMarkButtons onAddCurB={onAddCurB} onAddUserB={onAddUserB} />
       </Wrapper>
-      {open && (
+      {/* 우클릭시 나오는 메뉴(context menu) */}
+      {isOpen && (
         <ContextMenu
-          addFolder={addFolder}
           modalRef={modalRef}
           elementData={elementData}
-          addAppointedBookmark={addAppointedBookmark}
-          onRemoveBookmark={onRemoveBookmark}
+          onAddFolder={onAddFolder}
+          onAddUserB={onAddUserB}
+          onRemoveB={onRemoveB}
         />
       )}
     </>

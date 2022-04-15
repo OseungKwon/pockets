@@ -8,7 +8,7 @@ const defaultData = {
 };
 
 const useContextMenu = () => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(false);
   const [elementData, setElementData] = useState(defaultData);
   const modalRef = useRef();
 
@@ -27,14 +27,14 @@ const useContextMenu = () => {
 
   // context menu 바깥 클릭
   const onClickOutside = ({ target }) => {
-    if (open && !modalRef.current.contains(target)) {
+    if (isOpen && !modalRef.current.contains(target)) {
       setOpen(false);
       setElementData(defaultData);
     }
   };
 
   // 북마크 삭제
-  const onRemoveBookmark = () => {
+  const onRemoveB = () => {
     if (elementData.className.includes("bookmark")) {
       if (window.confirm("북마크 삭제"))
         // eslint-disable-next-line no-undef
@@ -49,7 +49,7 @@ const useContextMenu = () => {
 
   // context menu는 우클릭하면 보여짐
   useEffect(() => {
-    if (open) {
+    if (isOpen) {
       window.addEventListener("click", onClickOutside);
       return () => {
         window.removeEventListener("click", onClickOutside);
@@ -57,7 +57,7 @@ const useContextMenu = () => {
     }
   });
 
-  return [open, elementData, modalRef, onContextMenu, onRemoveBookmark];
+  return [isOpen, elementData, modalRef, onContextMenu, onRemoveB];
 };
 
 export default useContextMenu;

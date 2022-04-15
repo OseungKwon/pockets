@@ -19,7 +19,7 @@ const addBookmark = (stack, title, url) => {
 
 const useAddBookmark = (stack) => {
   // 현재 탭에 있는 북마크 추가
-  const addCurrentBookmark = () => {
+  const onAddCurB = () => {
     getTabData(function (tabdata) {
       const title = prompt(
         "추가할 북마크 이름을 입력하세요",
@@ -32,7 +32,7 @@ const useAddBookmark = (stack) => {
   };
 
   // 사용자 지정 북마크 추가
-  const addAppointedBookmark = () => {
+  const onAddUserB = () => {
     const title = prompt("추가할 북마크 이름을 입력하세요");
     const url = prompt("추가할 url 주소를 입력하세요", "https://");
     addBookmark(stack, title, url);
@@ -41,7 +41,7 @@ const useAddBookmark = (stack) => {
   };
 
   // 폴더 추가
-  const addFolder = () => {
+  const onAddFolder = () => {
     const title = prompt("추가할 폴더 이름을 입력하세요");
     if (title !== null) {
       // eslint-disable-next-line no-undef
@@ -54,7 +54,7 @@ const useAddBookmark = (stack) => {
     window.location.reload();
   };
 
-  return [addCurrentBookmark, addAppointedBookmark, addFolder];
+  return [onAddCurB, onAddUserB, onAddFolder];
 };
 
 export default useAddBookmark;
