@@ -1,11 +1,7 @@
 import React from "react";
 
 // style
-import { Wrapper, TitleIcon, Title } from "./style";
-
-// icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import { Wrapper } from "./style";
 
 // components
 import BookMarks from "./components/bookmark";
@@ -18,6 +14,7 @@ import useContextMenu from "./hooks/useContextMenu";
 import useAddBookmark from "./hooks/useAddBookmark";
 import useBookmarkStack from "./hooks/useBookmarkStack";
 import useItems from "./hooks/useItems";
+import Header from "./components/header";
 
 const App = () => {
   const [bookmarks, folders, topSites] = useItems();
@@ -32,12 +29,8 @@ const App = () => {
   return (
     <>
       <Wrapper onContextMenu={onContextMenu}>
-        <Title>
-          <TitleIcon>
-            <FontAwesomeIcon icon={faFolderOpen} />
-          </TitleIcon>
-          Pocket
-        </Title>
+        {/* 헤더 area */}
+        <Header />
         {/* 북마크 area */}
         <BookMarks
           stack={stack}
@@ -52,7 +45,7 @@ const App = () => {
         {/* 북마크 추가 버튼 area */}
         <BookMarkButtons onAddCurB={onAddCurB} onAddUserB={onAddUserB} />
       </Wrapper>
-      {/* 우클릭시 나오는 메뉴(context menu) */}
+      {/* 우클릭시 나오는 메뉴(context menu) area*/}
       {isOpen && (
         <ContextMenu
           modalRef={modalRef}

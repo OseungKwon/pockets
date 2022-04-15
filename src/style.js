@@ -7,14 +7,3 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
 `;
-
-export const TitleIcon = styled.span`
-  margin-right: 0.6rem;
-`;
-
-export const Title = styled.div`
-  margin: 1rem;
-  font-size: 1.4rem;
-  font-weight: 500;
-  font-family: "Chewy", cursive;
-`;
