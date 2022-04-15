@@ -102,6 +102,18 @@ const App = () => {
     window.location.reload();
   };
 
+  const addFolder = () => {
+    const title = prompt("추가할 폴더 이름을 입력하세요");
+    if (title !== null) {
+      chrome.bookmarks.create({
+        title: title,
+        parentId: stack[stack.length - 1].id
+      });
+      alert("북마크를 추가했습니다");
+    } else alert("북마크 추가에 실패하였습니다");
+    window.location.reload();
+  };
+
   const onClickRoute = (id) => {
     const idx = stack.findIndex((el) => el.id === id);
     setStack(stack.slice(0, idx + 1));
@@ -208,7 +220,7 @@ const App = () => {
       </Wrapper>
       {open && (
         <ContextMenu
-          bookmarks={bookmarks}
+          addFolder={addFolder}
           modalRef={modalRef}
           elementData={elementData}
           addAppointedBookmark={addAppointedBookmark}

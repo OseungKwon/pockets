@@ -37,7 +37,7 @@ const Stack = styled.div`
   cursor: pointer;
   padding: 0.3rem;
   border-radius: 6px;
-  &:hover:focus {
+  &:hover {
     background-color: #eee;
   }
   transition: 0.1s cubic-bezier(0, 0, 0.2, 1);

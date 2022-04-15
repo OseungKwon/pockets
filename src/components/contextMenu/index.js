@@ -1,6 +1,12 @@
 /* eslint-disable no-undef */
 import React from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFolderPlus,
+  faTrashCan,
+  faBookmark
+} from "@fortawesome/free-solid-svg-icons";
 
 const Menu = styled.div`
   width: 8rem;
@@ -17,6 +23,9 @@ const Menu = styled.div`
 `;
 
 const Item = styled.div`
+  display: flex;
+  flex-direction: row;
+
   padding: 0.2rem 0.1rem;
   cursor: pointer;
   border-radius: 6px;
@@ -25,12 +34,22 @@ const Item = styled.div`
   }
 `;
 
+const Icon = styled.div`
+  width: 20px;
+  margin-right: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Span = styled.span``;
+
 const ContextMenu = ({
-  bookmarks,
   modalRef,
   elementData,
   addAppointedBookmark,
-  setOpen
+  setOpen,
+  addFolder
 }) => {
   console.log("position", elementData.className);
 
@@ -45,18 +64,29 @@ const ContextMenu = ({
     window.location.reload();
   };
 
-  const onAddBookmark = () => {
-    addAppointedBookmark();
-  };
-
   return (
     <Menu ref={modalRef} elementData={elementData}>
       {(elementData.className.includes("bookmark") ||
         elementData.className.includes("folder")) && (
-        <Item onClick={onRemoveBookmark}>삭제</Item>
+        <Item onClick={onRemoveBookmark} style={{ color: "red" }}>
+          <Icon>
+            <FontAwesomeIcon icon={faTrashCan} />
+          </Icon>
+          <Span>삭제</Span>
+        </Item>
       )}
-      <Item onClick={onAddBookmark}>북마크 추가</Item>
-      <Item>폴더 추가</Item>
+      <Item onClick={addAppointedBookmark}>
+        <Icon>
+          <FontAwesomeIcon icon={faBookmark} />
+        </Icon>
+        <Span>북마크 추가</Span>
+      </Item>
+      <Item onClick={addFolder}>
+        <Icon>
+          <FontAwesomeIcon icon={faFolderPlus} />
+        </Icon>
+        <Span>폴더 추가</Span>
+      </Item>
     </Menu>
   );
 };
