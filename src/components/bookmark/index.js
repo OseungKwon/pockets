@@ -18,8 +18,9 @@ const Bookmark = styled.a`
   border-radius: 6px;
   &:hover {
     background-color: #eee;
-    transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
   }
+  transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
+  background: ${(props) => props.focus && "#eee"};
 `;
 
 const Topbar = styled.div`
@@ -36,10 +37,10 @@ const Stack = styled.div`
   cursor: pointer;
   padding: 0.3rem;
   border-radius: 6px;
-  &:hover {
+  &:hover:focus {
     background-color: #eee;
-    transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
   }
+  transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
 `;
 
 const Space = styled.div`
@@ -58,8 +59,9 @@ const Folder = styled.div`
   border-radius: 6px;
   &:hover {
     background-color: #eee;
-    transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
   }
+  transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
+  background: ${(props) => props.focus && "#eee"};
 `;
 
 const BookMarks = ({
@@ -67,7 +69,8 @@ const BookMarks = ({
   onClickRoute,
   folders,
   onClickFolder,
-  bookmarks
+  bookmarks,
+  elementData
 }) => {
   return (
     <Container>
@@ -88,10 +91,13 @@ const BookMarks = ({
           .filter((el) => el.parentId === String(stack[stack.length - 1].id))
           .map((folder) => (
             <Folder
+              key={folder.id}
               className="folder"
+              id={folder.id}
               onClick={() => {
                 onClickFolder(folder.id, folder.title);
               }}
+              focus={elementData.id === folder.id}
             >
               📒 {folder.title}
             </Folder>
@@ -100,10 +106,13 @@ const BookMarks = ({
           .filter((el) => el.parentId === String(stack[stack.length - 1].id))
           .map((bookmark) => (
             <Bookmark
+              key={bookmark.id}
               className="bookmark"
+              id={bookmark.id}
               href={bookmark.url}
               target="_blank"
               title={bookmark.title}
+              focus={elementData.id === bookmark.id}
             >
               <Favicon
                 src={

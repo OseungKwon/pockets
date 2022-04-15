@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from "react";
 import styled from "styled-components";
 
@@ -16,30 +17,47 @@ const Menu = styled.div`
 `;
 
 const Item = styled.div`
-  padding: 0.2rem 0;
+  padding: 0.2rem 0.1rem;
   cursor: pointer;
   border-radius: 6px;
-  :hover {
+  :hover:focus {
     background: #eee;
   }
 `;
 
-const ContextMenu = ({ modalRef, elementData }) => {
+const ContextMenu = ({
+  bookmarks,
+  modalRef,
+  elementData,
+  addAppointedBookmark,
+  setOpen
+}) => {
   console.log("position", elementData.className);
+
+  const onRemoveBookmark = () => {
+    if (elementData.className.includes("bookmark")) {
+      chrome.bookmarks.remove(elementData.id);
+      alert("북마크 삭제");
+      setOpen(false);
+      window.location.reload();
+    } else if (elementData.className.includes("folder")) {
+      chrome.bookmarks.remove(elementData.id);
+      alert("폴더 삭제");
+      setOpen(false);
+      window.location.reload();
+    } else {
+      alert("북마크를 클릭해주세요.");
+    }
+  };
+
+  const onAddBookmark = () => {
+    addAppointedBookmark();
+  };
+
   return (
     <Menu ref={modalRef} elementData={elementData}>
-      <Item
-        onClick={() => {
-          if (elementData.className.includes("bookmark")) alert("북마크 삭제");
-          else if (elementData.className.includes("folder")) alert("폴더 삭제");
-          else {
-            alert("다른 곳 클릭함");
-          }
-        }}
-      >
-        삭제
-      </Item>
-      <Item>페이지 추가</Item>
+      <Item onClick={onRemoveBookmark}>삭제</Item>
+      <Item onClick={onAddBookmark}>페이지 추가</Item>
       <Item>폴더 추가</Item>
     </Menu>
   );

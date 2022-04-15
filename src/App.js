@@ -44,7 +44,8 @@ const App = () => {
   const [elementData, setElementData] = useState({
     top: "",
     left: "",
-    className: ""
+    className: "",
+    id: ""
   });
   const modalRef = useRef();
 
@@ -54,15 +55,17 @@ const App = () => {
     setElementData({
       left: e.clientX,
       top: e.clientY,
-      className: e.target.className
+      className: e.target.className,
+      id: e.target.id
     });
     console.log(e);
   };
 
   const handleClickOutside = ({ target }) => {
-    console.log("outside", target);
-    console.log("ref", modalRef);
-    if (open && !modalRef.current.contains(target)) setOpen(false);
+    if (open && !modalRef.current.contains(target)) {
+      setOpen(false);
+      setElementData({ top: "", left: "", className: "", id: "" });
+    }
   };
 
   const addCurrentBookmark = async () => {
@@ -197,6 +200,7 @@ const App = () => {
           folders={folders}
           onClickFolder={onClickFolder}
           bookmarks={bookmarks}
+          elementData={elementData}
         />
         <MostVisited topSites={topSites} />
         <BookMarkButtons
@@ -204,7 +208,15 @@ const App = () => {
           addAppointedBookmark={addAppointedBookmark}
         />
       </Wrapper>
-      {open && <ContextMenu modalRef={modalRef} elementData={elementData} />}
+      {open && (
+        <ContextMenu
+          bookmarks={bookmarks}
+          modalRef={modalRef}
+          elementData={elementData}
+          addAppointedBookmark={addAppointedBookmark}
+          setOpen={setOpen}
+        />
+      )}
     </>
   );
 };
