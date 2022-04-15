@@ -28,9 +28,11 @@ const Topbar = styled.div`
   display: flex;
   flex-direction: row;
   border: 1px solid #ccc;
+  overflow-x: scroll;
 `;
 
 const Stack = styled.div`
+  white-space: nowrap;
   cursor: pointer;
   padding: 0.3rem;
   border-radius: 6px;
