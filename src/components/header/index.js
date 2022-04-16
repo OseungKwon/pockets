@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <Title>
       <TitleIcon>
-        <FontAwesomeIcon icon={faFolderOpen} />
+        <FontAwesomeIcon icon={faFolderOpen} data-testid="titleIcon" />
       </TitleIcon>
       Pocket
     </Title>
