@@ -25,7 +25,7 @@ const MockContextMenu = (
   );
 };
 
-describe("<BookMarkButtons/>", () => {
+describe("<ContextMenu/>", () => {
   it("메뉴 내부 text 확인", () => {
     MockContextMenu("bookmark");
     screen.getByText(/삭제/i);
