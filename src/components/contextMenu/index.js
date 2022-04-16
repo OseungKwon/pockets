@@ -24,22 +24,22 @@ const ContextMenu = ({
     <Menu ref={modalRef} elementData={elementData}>
       {(elementData.className.includes("bookmark") ||
         elementData.className.includes("folder")) && (
-        <Item onClick={onRemoveB} style={{ color: "red" }}>
+        <Item onClick={onRemoveB} style={{ color: "red" }} data-testid="remove">
           <Icon>
-            <FontAwesomeIcon icon={faTrashCan} />
+            <FontAwesomeIcon icon={faTrashCan} data-testid="removeIcon" />
           </Icon>
           <Span>삭제</Span>
         </Item>
       )}
-      <Item onClick={onAddUserB}>
+      <Item onClick={onAddUserB} data-testid="addBookmark">
         <Icon>
-          <FontAwesomeIcon icon={faBookmark} />
+          <FontAwesomeIcon icon={faBookmark} data-testid="addBIcon" />
         </Icon>
         <Span>북마크 추가</Span>
       </Item>
-      <Item onClick={onAddFolder}>
+      <Item onClick={onAddFolder} data-testid="addFolder">
         <Icon>
-          <FontAwesomeIcon icon={faFolderPlus} />
+          <FontAwesomeIcon icon={faFolderPlus} data-testid="addFIcon" />
         </Icon>
         <Span>폴더 추가</Span>
       </Item>
