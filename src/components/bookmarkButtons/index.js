@@ -13,10 +13,12 @@ const BookMarkButtons = ({ onAddCurB, onAddUserB }) => {
     <Container>
       <Menu>
         <Button onClick={onAddCurB}>
-          <FontAwesomeIcon icon={faBookmark} /> 현재 페이지 북마크
+          <FontAwesomeIcon icon={faBookmark} data-testid="curBIcon" /> 현재
+          페이지 북마크
         </Button>
         <Button onClick={onAddUserB}>
-          <FontAwesomeIcon icon={faBookmark} /> 선택한 페이지 북마크
+          <FontAwesomeIcon icon={faBookmark} data-testid="userBIcon" /> 선택한
+          페이지 북마크
         </Button>
       </Menu>
     </Container>
