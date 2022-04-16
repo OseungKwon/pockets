@@ -18,9 +18,11 @@ const BookMarks = ({
       <Topbar>
         {stack.map((el) => (
           <Stack
+            key={el.id}
             onClick={() => {
               onClickRoute(el.id);
             }}
+            data-testid={"route_" + el.title}
           >
             &gt; 📂{el.title}
           </Stack>
@@ -38,6 +40,7 @@ const BookMarks = ({
                 onClickFolder(folder.id, folder.title);
               }}
               focus={elementData.id === folder.id}
+              data-testid={folder.id}
             >
               📒 {folder.title}
             </Folder>
@@ -56,7 +59,7 @@ const BookMarks = ({
             >
               <Favicon
                 src={"chrome://favicon/size/16@1x/" + bookmark.url}
-                alt=""
+                alt={bookmark.title}
               />{" "}
               {bookmark.title}
             </Bookmark>
