@@ -7,6 +7,11 @@ const defaultData = {
   id: ""
 };
 
+const removeConfirm = (type, id) => {
+  // eslint-disable-next-line no-undef
+  if (window.confirm(`${type} 삭제`)) chrome.bookmarks.remove(id);
+};
+
 const useContextMenu = () => {
   const [isOpen, setOpen] = useState(false);
   const [elementData, setElementData] = useState(defaultData);
@@ -36,12 +41,11 @@ const useContextMenu = () => {
   // 북마크 삭제
   const onRemoveB = () => {
     if (elementData.className.includes("bookmark")) {
-      if (window.confirm("북마크 삭제"))
-        // eslint-disable-next-line no-undef
-        chrome.bookmarks.remove(elementData.id);
-    } else if (elementData.className.includes("folder")) {
+      removeConfirm("북마크", elementData.id);
+    }
+    if (elementData.className.includes("folder")) {
       // eslint-disable-next-line no-undef
-      if (window.confirm("폴더 삭제")) chrome.bookmarks.remove(elementData.id);
+      removeConfirm("폴더", elementData.id);
     }
     setOpen(false);
     window.location.reload();
