@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "pocket",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "포켓: 북마크 관리를 쉽고 간편하게",
   "sidebar_action": {
     "default_page": "index.html",
@@ -9,7 +9,9 @@
       "16": "favicon-16x16.png",
       "32": "favicon-32x32.png",
       "96": "favicon-96x96.png"
-    }
+    },
+    "use_navigation_bar": true,
+    "default_title": "pocket"
   },
   "permissions": [
     "bookmarks",
