@@ -26,9 +26,19 @@ const App = () => {
 
   const [onAddCurB, onAddUserB, onAddFolder] = useAddBookmark(stack);
 
+  const a = () => {
+    // eslint-disable-next-line no-undef
+    chrome.history.search({ text: "", maxResults: 10 }, function (data) {
+      data.forEach(function (page) {
+        console.log(page.url);
+      });
+    });
+  };
+
   return (
     <>
       <Wrapper onContextMenu={onContextMenu}>
+        <button onClick={a}>버튼</button>
         {/* 헤더 area */}
         <Header />
         {/* 북마크 area */}

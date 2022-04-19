@@ -18,7 +18,8 @@
     "tabs",
     "topSites",
     "storage",
-    "chrome://favicon/"
+    "chrome://favicon/",
+    "history"
   ],
   "content_security_policy": "img-src chrome://favicon;"
 }
