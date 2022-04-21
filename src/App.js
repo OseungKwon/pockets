@@ -16,7 +16,12 @@ import useBookmarkStack from "./hooks/useBookmarkStack";
 import useItems from "./hooks/useItems";
 import Header from "./components/header";
 
+// redux
+import { useSelector } from "react-redux";
+
 const App = () => {
+  const bgColor = useSelector((state) => state.slice.bgColor);
+
   const [bookmarks, folders, topSites] = useItems();
 
   const [stack, onClickRoute, onClickFolder] = useBookmarkStack();
@@ -35,9 +40,11 @@ const App = () => {
     });
   };
 
+  console.log("bgc", bgColor);
+
   return (
     <>
-      <Wrapper onContextMenu={onContextMenu}>
+      <Wrapper onContextMenu={onContextMenu} bgColor={bgColor || "#f8f8f8"}>
         {/* 헤더 area */}
         <Header />
         {/* 북마크 area */}
