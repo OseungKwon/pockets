@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // style
 import { Wrapper } from "./style";
@@ -17,9 +17,11 @@ import useItems from "./hooks/useItems";
 import Header from "./components/header";
 
 // redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { changeBgColor } from "./store/slice/slice";
 
 const App = () => {
+  const dispatch = useDispatch();
   const bgColor = useSelector((state) => state.slice.bgColor);
 
   const [bookmarks, folders, topSites] = useItems();
@@ -40,7 +42,17 @@ const App = () => {
     });
   };
 
-  console.log("bgc", bgColor);
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
+    chrome.storage.sync.get("bgColor", ({ bgColor }) => {
+      if (bgColor) {
+        dispatch(changeBgColor(bgColor));
+      } else {
+        // eslint-disable-next-line no-undef
+        chrome.storage.sync.set({ bgColor: bgColor });
+      }
+    });
+  }, []);
 
   return (
     <>

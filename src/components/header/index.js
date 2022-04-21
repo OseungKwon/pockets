@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // style
 import { TitleIcon, Title, SettingIcon } from "./style";
@@ -18,6 +18,7 @@ const Header = () => {
   const onSetting = () => {
     dispatch(changeModalState(true));
   };
+
   return (
     <>
       <Title>
