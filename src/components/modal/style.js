@@ -7,7 +7,6 @@ export const ModalBase = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
   background: rgba(0, 0, 0, 0.4);
 `;
 
@@ -40,9 +39,10 @@ export const ColorBox = styled.div`
   border-radius: 6px;
   background: ${(props) => props.bgColor};
   transition: 0.3s cubic-bezier(0, 0, 0.2, 1);
+  border: 2px solid #ababab;
 
   &:hover {
-    box-shadow: 1px 4px 4px 0 rgb(117 121 125 / 6%),
+    box-shadow: 4px 1px 4px 0 rgb(117 121 125 / 6%),
       0 1px 3px 0 rgb(113 117 121 / 20%);
     transform: scale(1.3);
   }
@@ -59,4 +59,9 @@ export const XBtn = styled.div`
   top: 1px;
   align-items: center;
   justify-content: center;
+  color: #646464;
+  &:hover {
+    transform: scale(1.2);
+    color: #000;
+  }
 `;

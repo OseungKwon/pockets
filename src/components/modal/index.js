@@ -19,7 +19,12 @@ const Modal = () => {
   };
 
   return (
-    <ModalBase>
+    <ModalBase
+      onClick={(e) => {
+        e.stopPropagation();
+        onCloseModal();
+      }}
+    >
       <ModalArea>
         <H2>색 선택</H2>
         <Content>
