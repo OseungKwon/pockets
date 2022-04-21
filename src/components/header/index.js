@@ -8,10 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderOpen, faGear } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../modal";
 
+import { useDispatch, useSelector } from "react-redux";
+import { changeModalState } from "../../store/slice/slice";
+
 const Header = () => {
-  const [isOpen, setOpen] = useState(false);
+  const isOpen = useSelector((state) => state.slice.isModalOpen);
+  console.log(isOpen);
+  const dispatch = useDispatch();
   const onSetting = () => {
-    setOpen(true);
+    dispatch(changeModalState(true));
   };
   return (
     <>

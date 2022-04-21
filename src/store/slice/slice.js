@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  bgColor: "#f8f8f8"
+  bgColor: "#f8f8f8",
+  isModalOpen: false
 };
 
 const slice = createSlice({
@@ -9,13 +10,15 @@ const slice = createSlice({
   initialState,
   reducers: {
     changeBgColor: (state, action) => {
-      console.log("pay", action, action.payload);
       state.bgColor = action.payload;
+    },
+    changeModalState: (state, action) => {
+      state.isModalOpen = action.payload;
     }
   }
 });
 
 const { actions, reducer } = slice;
-export const { changeBgColor } = actions;
+export const { changeBgColor, changeModalState } = actions;
 
 export default reducer;

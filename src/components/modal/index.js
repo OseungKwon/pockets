@@ -1,15 +1,21 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { changeBgColor } from "../../store/slice/slice";
-import { ModalBase, ModalArea, H2, Content, ColorBox } from "./style";
+import { changeBgColor, changeModalState } from "../../store/slice/slice";
+import { ModalBase, ModalArea, H2, Content, ColorBox, XBtn } from "./style";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const bgColors = ["#ffcfcf", "#cfffe2", "#cfd1ff", "#cfe4ff"];
+const bgColors = ["#f8f8f8", "#ffcfcf", "#cfffe2", "#cfd1ff", "#cfe4ff"];
 
 const Modal = () => {
   const dispatch = useDispatch();
 
   const onColorPick = (bgColor) => {
     dispatch(changeBgColor(bgColor));
+  };
+
+  const onCloseModal = () => {
+    dispatch(changeModalState(false));
   };
 
   return (
@@ -26,6 +32,9 @@ const Modal = () => {
             ></ColorBox>
           ))}
         </Content>
+        <XBtn>
+          <FontAwesomeIcon icon={faXmark} onClick={onCloseModal} />
+        </XBtn>
       </ModalArea>
     </ModalBase>
   );

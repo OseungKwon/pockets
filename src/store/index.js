@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
 
 import bookmarkReducer from "./slice/bookmarkSlice";
 import reducer from "./slice/slice";
