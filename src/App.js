@@ -38,7 +38,6 @@ const App = () => {
   return (
     <>
       <Wrapper onContextMenu={onContextMenu}>
-        <button onClick={a}>버튼</button>
         {/* 헤더 area */}
         <Header />
         {/* 북마크 area */}

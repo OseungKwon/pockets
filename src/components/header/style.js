@@ -10,3 +10,7 @@ export const Title = styled.div`
   font-weight: 500;
   font-family: "Chewy", cursive;
 `;
+
+export const SettingIcon = styled.div`
+  display: flex;
+`;
