@@ -13,6 +13,7 @@ export const Title = styled.div`
 
 export const SettingIcon = styled.div`
   cursor: pointer;
+
   position: fixed;
   font-size: 1.1rem;
   width: 1.7rem;
@@ -28,6 +29,7 @@ export const SettingIcon = styled.div`
     0 1px 3px 0 rgb(113 117 121 / 6%);
   border: 1px solid #e1e1e1;
   &:hover {
+    transform: rotate(90deg);
     box-shadow: 1px 4px 4px 0 rgb(117 121 125 / 27%),
       0 1px 3px 0 rgb(113 117 121 / 27%);
   }
