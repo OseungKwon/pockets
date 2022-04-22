@@ -25,7 +25,11 @@ const Modal = () => {
         onCloseModal();
       }}
     >
-      <ModalArea>
+      <ModalArea
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <H2>색 선택</H2>
         <Content>
           {bgColors.map((bgColor) => (
