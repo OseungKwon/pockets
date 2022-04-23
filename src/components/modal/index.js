@@ -21,7 +21,6 @@ const Modal = () => {
   return (
     <ModalBase
       onClick={(e) => {
-        e.stopPropagation();
         onCloseModal();
       }}
     >
