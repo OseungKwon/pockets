@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { changeBgColor, changeModalState } from "../../store/slice/slice";
 import { ModalBase, ModalArea, H2, Content, ColorBox, XBtn } from "./style";
@@ -7,6 +7,8 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Chart from "../chart";
 
 const bgColors = ["#f8f8f8", "#ffcfcf", "#cfffe2", "#cfd1ff", "#cfe4ff"];
+
+const SplitChart = React.lazy(() => import("../chart"));
 
 const Modal = ({ topSites }) => {
   const dispatch = useDispatch();
@@ -43,7 +45,9 @@ const Modal = ({ topSites }) => {
         </Content>
         <H2>최다 방문 사이트</H2>
         <Content>
-          <Chart topSites={topSites} />
+          <Suspense fallback={<div>loading</div>}>
+            <SplitChart topSites={topSites} />
+          </Suspense>
         </Content>
         <XBtn>
           <FontAwesomeIcon icon={faXmark} onClick={onCloseModal} />
