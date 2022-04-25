@@ -41,6 +41,7 @@ const Modal = ({ topSites }) => {
             ></ColorBox>
           ))}
         </Content>
+        <H2>최다 방문 사이트</H2>
         <Content>
           <Chart topSites={topSites} />
         </Content>

@@ -23,7 +23,7 @@ const Chart = ({ topSites }) => {
       <g transform={`translate(120 120)`}>
         {arr.length > 0 &&
           createPie(arr.slice(0, 5)).map((d, i) => (
-            <Arc key={i} data={d.data} index={i} colors={colors} />
+            <Arc key={i} data={d} index={i} colors={colors} />
           ))}
         <FocusTitle y="-8" x="0" textAnchor="middle">
           {focusUrl.title}

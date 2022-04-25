@@ -22,10 +22,13 @@ export const ModalArea = styled.div`
 `;
 
 export const H2 = styled.div`
-  font-size: 12px;
+  margin-bottom: 2rem;
+  font-size: 15px;
+  font-weight: bold;
 `;
 
 export const Content = styled.div`
+  margin-bottom: 2rem;
   padding: 1rem;
   display: flex;
   flex-direction: row;

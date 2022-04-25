@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "pocket",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "포켓: 북마크 관리를 쉽고 간편하게",
   "sidebar_action": {
     "default_page": "index.html",

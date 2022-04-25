@@ -21,7 +21,7 @@ const Arc = ({ data, index, colors }) => {
 
   const mouseOver = () => {
     setAdd(5);
-    dispatch(fixFocus({ title: data.title, viewCount: data.value }));
+    dispatch(fixFocus({ title: data.data.title, viewCount: data.data.value }));
   };
   const mouseOut = () => {
     setAdd(0);
@@ -45,7 +45,9 @@ const Arc = ({ data, index, colors }) => {
         fontSize="11"
         fill="#777"
       >
-        {data.title.length > 5 ? `${data.title.slice(0, 5)}..` : data.title}
+        {data.data.title.length > 5
+          ? `${data.data.title.slice(0, 5)}..`
+          : data.data.title}
       </Text>
     </g>
   );
