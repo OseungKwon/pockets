@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 const defaultData = {
   top: "",
@@ -31,15 +31,18 @@ const useContextMenu = () => {
   };
 
   // context menu 바깥 클릭
-  const onClickOutside = ({ target }) => {
-    if (isOpen && !modalRef.current.contains(target)) {
-      setOpen(false);
-      setElementData(defaultData);
-    }
-  };
+  const onClickOutside = useCallback(
+    ({ target }) => {
+      if (isOpen && !modalRef.current.contains(target)) {
+        setOpen(false);
+        setElementData(defaultData);
+      }
+    },
+    [isOpen]
+  );
 
   // 북마크 삭제
-  const onRemoveB = () => {
+  const onRemoveB = useCallback(() => {
     if (elementData.className.includes("bookmark")) {
       removeConfirm("북마크", elementData.id);
     }
@@ -49,7 +52,7 @@ const useContextMenu = () => {
     }
     setOpen(false);
     window.location.reload();
-  };
+  }, [elementData.className, elementData.id]);
 
   // context menu는 우클릭하면 보여짐
   useEffect(() => {

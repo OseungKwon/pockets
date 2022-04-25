@@ -38,7 +38,7 @@ const useHistory = (topSites) => {
       setArr(data);
     }
     fetchData();
-  }, []);
+  }, [topSites]);
 
   return [arr, createPie];
 };

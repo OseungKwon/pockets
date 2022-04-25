@@ -43,7 +43,7 @@ const App = () => {
         chrome.storage.sync.set({ bgColor: bgColor });
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
