@@ -53,4 +53,4 @@ const Modal = ({ topSites }) => {
   );
 };
 
-export default Modal;
+export default React.memo(Modal);

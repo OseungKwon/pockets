@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 // style
 import { TitleIcon, Title, SettingIcon } from "./style";
@@ -35,4 +35,4 @@ const Header = ({ topSites }) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
