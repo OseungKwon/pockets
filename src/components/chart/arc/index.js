@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+
+// d3
 import * as d3 from "d3";
 
+// redux
 import { useDispatch } from "react-redux";
 import { fixFocus } from "../../../store/slice/slice";
+
+// style
 import { Path, Text } from "./style";
+
 const Arc = ({ data, index, colors }) => {
   const dispatch = useDispatch();
   const [add, setAdd] = useState(0);
@@ -15,7 +21,7 @@ const Arc = ({ data, index, colors }) => {
 
   const mouseOver = () => {
     setAdd(5);
-    dispatch(fixFocus({ title: data.data.title, viewCount: data.data.value }));
+    dispatch(fixFocus({ title: data.title, viewCount: data.value }));
   };
   const mouseOut = () => {
     setAdd(0);
@@ -39,9 +45,7 @@ const Arc = ({ data, index, colors }) => {
         fontSize="11"
         fill="#777"
       >
-        {data.data.title.length > 5
-          ? `${data.data.title.slice(0, 5)}..`
-          : data.data.title}
+        {data.title.length > 5 ? `${data.title.slice(0, 5)}..` : data.title}
       </Text>
     </g>
   );
