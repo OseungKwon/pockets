@@ -11,7 +11,7 @@ import Modal from "../modal";
 import { useDispatch, useSelector } from "react-redux";
 import { changeModalState } from "../../store/slice/slice";
 
-const Header = () => {
+const Header = ({ topSites }) => {
   const isOpen = useSelector((state) => state.slice.isModalOpen);
   console.log(isOpen);
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const Header = () => {
       <SettingIcon>
         <FontAwesomeIcon icon={faGear} onClick={onSetting} />
       </SettingIcon>
-      {isOpen && <Modal />}
+      {isOpen && <Modal topSites={topSites} />}
     </>
   );
 };

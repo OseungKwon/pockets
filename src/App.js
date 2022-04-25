@@ -58,7 +58,7 @@ const App = () => {
     <>
       <Wrapper onContextMenu={onContextMenu} bgColor={bgColor || "#f8f8f8"}>
         {/* 헤더 area */}
-        <Header />
+        <Header topSites={topSites} />
         {/* 북마크 area */}
         <BookMarks
           stack={stack}
