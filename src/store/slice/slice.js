@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   // eslint-disable-next-line no-undef
   bgColor: "#f8f8f8",
+  focusUrl: { title: "", viewCount: 0 },
   isModalOpen: false
 };
 
@@ -17,11 +18,14 @@ const slice = createSlice({
     },
     changeModalState: (state, action) => {
       state.isModalOpen = action.payload;
+    },
+    fixFocus: (state, action) => {
+      state.focusUrl = action.payload;
     }
   }
 });
 
 const { actions, reducer } = slice;
-export const { changeBgColor, changeModalState } = actions;
+export const { changeBgColor, changeModalState, fixFocus } = actions;
 
 export default reducer;

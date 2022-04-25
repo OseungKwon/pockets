@@ -1,55 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import * as d3 from "d3";
-import styled from "styled-components";
-
-const Path = styled.path`
-  cursor: pointer;
-  transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-`;
-
-const Text = styled.text`
-  transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-`;
-
-const Arc = ({ data, index, colors }) => {
-  const [add, setAdd] = useState(0);
-  const createArc = d3
-    .arc()
-    .innerRadius(50 + add / 2)
-    .outerRadius(100 + add)
-    .cornerRadius(5);
-
-  const mouseOver = () => {
-    setAdd(5);
-  };
-  const mouseOut = () => {
-    setAdd(0);
-  };
-
-  return (
-    <g
-      key={index}
-      className="arc"
-      onMouseOver={mouseOver}
-      onMouseOut={mouseOut}
-    >
-      <Path className="arc" d={createArc(data)} fill={colors[index]} />
-      <Text
-        transform={`translate(${createArc.centroid(data)})`}
-        textAnchor="middle"
-        alignmentBaseline="middle"
-        fill="#555"
-        fontSize="10"
-      >
-        {data.data.title.length > 10
-          ? `${data.data.title.slice(0, 7)}..`
-          : data.data.title}
-      </Text>
-    </g>
-  );
-};
+import { useSelector } from "react-redux";
+import { Svg, FocusText, FocusTitle } from "./style";
+import Arc from "./arc";
 
 const Chart = ({ topSites }) => {
+  const [arr, setArr] = useState([]);
+  const focusUrl = useSelector((state) => state.slice.focusUrl);
   const createPie = d3
     .pie()
     .value((d) => d.value)
@@ -81,12 +38,28 @@ const Chart = ({ topSites }) => {
         );
       }
 
-      console.log(data);
+      console.log(data.sort((a, b) => b.value - a.value));
+      setArr(data);
     }
     fetchData();
   }, []);
 
-  return <svg width={500} height={500}></svg>;
+  return (
+    <Svg>
+      <g transform={`translate(120 120)`}>
+        {arr.length > 0 &&
+          createPie(arr.slice(0, 5)).map((d, i) => (
+            <Arc key={i} data={d} index={i} colors={colors} />
+          ))}
+        <FocusTitle y="-8" x="0" textAnchor="middle">
+          {focusUrl.title}
+        </FocusTitle>
+        <FocusText y="15" x="0" textAnchor="middle">
+          {focusUrl.viewCount} visited
+        </FocusText>
+      </g>
+    </Svg>
+  );
 };
 
 export default Chart;
