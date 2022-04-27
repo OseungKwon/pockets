@@ -25,13 +25,15 @@ const useHistory = (topSites) => {
       const data = [];
 
       for (let i = 0; i < topSites.length; i++) {
-        search(topSites[i].url).then((el) =>
-          data.push({
-            title: topSites[i].title,
-            url: topSites[i].url,
-            value: el.length
-          })
-        );
+        search(topSites[i].url)
+          .then((el) =>
+            data.push({
+              title: topSites[i].title,
+              url: topSites[i].url,
+              value: el.length
+            })
+          )
+          .catch((e) => console.log(e));
       }
 
       setArr(data);

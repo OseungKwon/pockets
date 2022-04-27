@@ -25,10 +25,10 @@ const Chart = ({ topSites }) => {
           createPie(arr.slice(0, 5)).map((d, i) => (
             <Arc key={i} data={d} index={i} colors={colors} />
           ))}
-        <FocusTitle y="-8" x="0" textAnchor="middle">
+        <FocusTitle y="-8" x="0" textAnchor="middle" data-testid="focusTitle">
           {focusUrl.title}
         </FocusTitle>
-        <FocusText y="15" x="0" textAnchor="middle">
+        <FocusText y="15" x="0" textAnchor="middle" data-testid="focusText">
           {focusUrl.viewCount} visited
         </FocusText>
       </g>

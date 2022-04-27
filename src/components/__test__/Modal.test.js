@@ -33,8 +33,9 @@ describe("<Header/>", () => {
     useDispatchMock.mockClear();
   });
 
-  it("색 선택 text 확인", () => {
+  it("색 선택 text 확인", async () => {
     render(<Modal />);
+    await wait();
     screen.queryByText(/색 선택/i);
   });
   it("최다 방문 사이트 text 확인", async () => {
@@ -44,6 +45,7 @@ describe("<Header/>", () => {
   });
   it("색 선택 box 확인", async () => {
     mockModal(useSelectorMock);
+    await wait();
     const colorBoxes = screen.getAllByTestId("colorBox");
     colorBoxes.map((colorBox) => expect(colorBox).toBeInTheDocument());
   });
