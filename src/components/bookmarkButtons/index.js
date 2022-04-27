@@ -7,8 +7,11 @@ import { Container } from "../common/style";
 // icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import useAddBookmark from "../../hooks/useAddBookmark";
 
-const BookMarkButtons = ({ onAddCurB, onAddUserB }) => {
+const BookMarkButtons = ({ stack }) => {
+  const [onAddCurB, onAddUserB] = useAddBookmark(stack);
+
   return (
     <Container>
       <Menu>

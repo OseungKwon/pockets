@@ -11,7 +11,6 @@ import ContextMenu from "./components/contextMenu";
 
 // hooks
 import useContextMenu from "./hooks/useContextMenu";
-import useAddBookmark from "./hooks/useAddBookmark";
 import useBookmarkStack from "./hooks/useBookmarkStack";
 import useItems from "./hooks/useItems";
 import Header from "./components/header";
@@ -30,8 +29,6 @@ const App = () => {
 
   const [isOpen, elementData, modalRef, onContextMenu, onRemoveB] =
     useContextMenu();
-
-  const [onAddCurB, onAddUserB, onAddFolder] = useAddBookmark(stack);
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
@@ -62,15 +59,14 @@ const App = () => {
         {/* 가장 많이 방문한 사이트 area */}
         <MostVisited topSites={topSites} />
         {/* 북마크 추가 버튼 area */}
-        <BookMarkButtons onAddCurB={onAddCurB} onAddUserB={onAddUserB} />
+        <BookMarkButtons stack={stack} />
       </Wrapper>
       {/* 우클릭시 나오는 메뉴(context menu) area*/}
       {isOpen && (
         <ContextMenu
           modalRef={modalRef}
+          stack={stack}
           elementData={elementData}
-          onAddFolder={onAddFolder}
-          onAddUserB={onAddUserB}
           onRemoveB={onRemoveB}
         />
       )}

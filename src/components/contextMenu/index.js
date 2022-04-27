@@ -10,15 +10,10 @@ import {
   faTrashCan,
   faBookmark
 } from "@fortawesome/free-solid-svg-icons";
+import useAddBookmark from "../../hooks/useAddBookmark";
 
-const ContextMenu = ({
-  modalRef,
-  elementData,
-  onAddFolder,
-  onAddUserB,
-  onRemoveB
-}) => {
-  console.log("position", elementData.className);
+const ContextMenu = ({ modalRef, elementData, stack, onRemoveB }) => {
+  const [onAddFolder, onAddUserB] = useAddBookmark(stack);
 
   return (
     <Menu ref={modalRef} elementData={elementData}>

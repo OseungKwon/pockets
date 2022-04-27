@@ -2,12 +2,9 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import ContextMenu from "../ContextMenu/";
 
-const MockContextMenu = (
-  className,
-  onAddFolder = jest.fn(),
-  onAddUserB = jest.fn(),
-  onRemoveB = jest.fn()
-) => {
+const MockContextMenu = (className, onRemoveB = jest.fn()) => {
+  const stack = [{ id: 0, title: "root" }];
+
   const elementData = {
     left: 100,
     top: 100,
@@ -18,8 +15,7 @@ const MockContextMenu = (
     <ContextMenu
       modalRef={null}
       elementData={elementData}
-      onAddFolder={onAddFolder}
-      onAddUserB={onAddUserB}
+      stack={stack}
       onRemoveB={onRemoveB}
     />
   );
@@ -51,20 +47,20 @@ describe("<ContextMenu/>", () => {
     expect(screen.queryByText(/삭제/i)).not.toBeInTheDocument();
   });
   it("'북마크 추가' 클릭 시, 이벤트 발생", () => {
-    const onAddUserB = jest.fn();
-    MockContextMenu("", undefined, onAddUserB);
+    jest.spyOn(window, "alert").mockImplementation(() => {});
+    MockContextMenu("");
     fireEvent.click(screen.getByTestId("addBookmark"));
-    expect(onAddUserB).toHaveBeenCalled();
+    expect(window.alert).toHaveBeenCalled();
   });
   it("'폴더 추가' 클릭 시, 이벤트 발생", () => {
-    const onAddFolder = jest.fn();
-    MockContextMenu("", onAddFolder);
+    jest.spyOn(window, "alert").mockImplementation(() => {});
+    MockContextMenu("");
     fireEvent.click(screen.getByTestId("addFolder"));
-    expect(onAddFolder).toHaveBeenCalled();
+    expect(window.alert).toHaveBeenCalled();
   });
   it("'삭제' 클릭 시, 이벤트 발생", () => {
     const onRemoveB = jest.fn();
-    MockContextMenu("bookmark", undefined, undefined, onRemoveB);
+    MockContextMenu("bookmark", onRemoveB);
     fireEvent.click(screen.getByTestId("remove"));
     expect(onRemoveB).toHaveBeenCalled();
   });
