@@ -1,10 +1,13 @@
 import React, { Suspense } from "react";
+
+// redux
 import { useDispatch } from "react-redux";
 import { changeBgColor, changeModalState } from "../../store/slice/slice";
+
+// style
 import { ModalBase, ModalArea, H2, Content, ColorBox, XBtn } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import Chart from "../chart";
 
 const bgColors = ["#f8f8f8", "#ffcfcf", "#cfffe2", "#cfd1ff", "#cfe4ff"];
 

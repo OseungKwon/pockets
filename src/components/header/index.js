@@ -28,7 +28,11 @@ const Header = ({ topSites }) => {
         Pocket
       </Title>
       <SettingIcon>
-        <FontAwesomeIcon icon={faGear} onClick={onSetting} />
+        <FontAwesomeIcon
+          icon={faGear}
+          onClick={onSetting}
+          data-testid="settingIcon"
+        />
       </SettingIcon>
       {isOpen && <Modal topSites={topSites} />}
     </>
