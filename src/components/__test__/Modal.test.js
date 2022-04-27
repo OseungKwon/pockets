@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Modal from "../modal";
 import * as reactRedux from "react-redux";
+import { wait } from "@testing-library/user-event/dist/utils";
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
@@ -23,9 +24,9 @@ describe("<Header/>", () => {
 
   it("색 선택 text 확인", () => {
     render(<Modal />);
-    screen.getByText(/색 선택/i);
+    screen.queryByText(/색 선택/i);
   });
-  it("최다 방문 사이트 text 확인", () => {
+  it("최다 방문 사이트 text 확인", async () => {
     useSelectorMock.mockImplementation((selectorFn) =>
       selectorFn({
         slice: {
@@ -34,6 +35,8 @@ describe("<Header/>", () => {
       })
     );
     render(<Modal />);
-    screen.getByText(/최다 방문 사이트/i);
+
+    await wait();
+    expect(screen.getByText(/최다 방문 사이트/i)).toBeInTheDocument();
   });
 });
