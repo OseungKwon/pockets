@@ -21,12 +21,11 @@ const useHistory = (topSites) => {
     .sort(null);
 
   useEffect(() => {
-    async function fetchData() {
+    function fetchData() {
       const data = [];
 
-      // eslint-disable-next-line no-undef
       for (let i = 0; i < topSites.length; i++) {
-        await search(topSites[i].url).then((el) =>
+        search(topSites[i].url).then((el) =>
           data.push({
             title: topSites[i].title,
             url: topSites[i].url,
@@ -37,7 +36,9 @@ const useHistory = (topSites) => {
 
       setArr(data);
     }
-    fetchData();
+    if (topSites) {
+      fetchData();
+    }
   }, [topSites]);
 
   return [arr, createPie];
