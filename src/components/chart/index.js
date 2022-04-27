@@ -19,7 +19,7 @@ const Chart = ({ topSites }) => {
   const colors = ["#ffcfcf", "#cfffe2", "#cfd1ff", "#cfe4ff", "#fff4cc"];
 
   return (
-    <Svg>
+    <Svg data-testid="d3Chart">
       <g transform={`translate(120 120)`}>
         {arr.length > 0 &&
           createPie(arr.slice(0, 5)).map((d, i) => (

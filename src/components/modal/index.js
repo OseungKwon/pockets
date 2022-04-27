@@ -39,6 +39,7 @@ const Modal = ({ topSites }) => {
         <Content>
           {bgColors.map((bgColor) => (
             <ColorBox
+              data-testid="colorBox"
               key={bgColor}
               bgColor={bgColor}
               onClick={() => {
