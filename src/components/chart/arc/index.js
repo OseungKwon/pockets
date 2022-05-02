@@ -7,6 +7,9 @@ import * as d3 from "d3";
 import { useDispatch } from "react-redux";
 import { fixFocus } from "../../../store/slice/slice";
 
+// func
+import { mobileToCom } from "../../common";
+
 // style
 import { Path, Text } from "./style";
 
@@ -34,7 +37,7 @@ const Arc = ({ data, index, colors }) => {
       onMouseOver={mouseOver}
       onMouseOut={mouseOut}
     >
-      <a href={data.data.url} target="_blank" rel="noreferrer">
+      <a href={mobileToCom(data.data.url)} target="_blank" rel="noreferrer">
         <Path className="arc" d={createArc(data)} fill={colors[index]} />
       </a>
 

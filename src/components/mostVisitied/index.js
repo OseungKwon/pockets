@@ -1,4 +1,8 @@
 import React from "react";
+
+// func
+import { mobileToCom } from "../common";
+
 // style
 import { Space, Icon } from "./style";
 import { H2, Container } from "../common/style";
@@ -11,7 +15,7 @@ const MostVisited = ({ topSites }) => {
         {topSites.slice(0, 5).map((topSite) => (
           <a
             key={topSite.url}
-            href={topSite.url}
+            href={mobileToCom(topSite.url)}
             title={topSite.title}
             target="_blank"
             rel="noreferrer"

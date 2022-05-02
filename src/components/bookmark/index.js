@@ -1,5 +1,8 @@
 import React from "react";
 
+// func
+import { mobileToCom } from "../common";
+
 // style
 import { Favicon, Bookmark, Topbar, Stack, Space, Folder } from "./style";
 import { Container, H2 } from "../common/style";
@@ -52,7 +55,7 @@ const BookMarks = ({
               key={bookmark.id}
               className="bookmark"
               id={bookmark.id}
-              href={bookmark.url}
+              href={mobileToCom(bookmark.url)}
               target="_blank"
               title={bookmark.title}
               focus={elementData.id === bookmark.id}
