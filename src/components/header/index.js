@@ -13,7 +13,6 @@ import { changeModalState } from "../../store/slice/slice";
 
 const Header = ({ topSites }) => {
   const isOpen = useSelector((state) => state.slice.isModalOpen);
-  console.log(isOpen);
   const dispatch = useDispatch();
   const onSetting = () => {
     dispatch(changeModalState(true));
