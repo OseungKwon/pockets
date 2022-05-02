@@ -19,7 +19,7 @@ jest.mock("react-redux", () => ({
   useDispatch: jest.fn()
 }));
 
-describe("<Header/>", () => {
+describe("<Modal/>", () => {
   const useSelectorMock = jest.spyOn(reactRedux, "useSelector");
   const useDispatchMock = jest.spyOn(reactRedux, "useDispatch");
 
