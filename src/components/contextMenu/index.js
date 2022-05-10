@@ -8,12 +8,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFolderPlus,
   faTrashCan,
-  faBookmark
+  faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 import useAddBookmark from "../../hooks/useAddBookmark";
 
 const ContextMenu = ({ modalRef, elementData, stack, onRemoveB }) => {
-  const [onAddFolder, onAddUserB] = useAddBookmark(stack);
+  const [onAddCurB, onAddUserB, onAddFolder] = useAddBookmark(stack);
 
   return (
     <Menu ref={modalRef} elementData={elementData}>
