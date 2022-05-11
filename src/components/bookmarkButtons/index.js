@@ -10,7 +10,7 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import useAddBookmark from "../../hooks/useAddBookmark";
 
 const BookMarkButtons = ({ stack }) => {
-  const [onAddCurB, onAddUserB] = useAddBookmark(stack);
+  const [onAddCurB, onAddUserB, onAddFolder] = useAddBookmark(stack);
 
   return (
     <Container>
