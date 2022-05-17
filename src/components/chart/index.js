@@ -14,6 +14,7 @@ import useHistory from "../../hooks/useHistory";
 
 const Chart = ({ topSites }) => {
   const [arr, createPie] = useHistory(topSites);
+  console.log("slice", arr);
   const focusUrl = useSelector((state) => state.slice.focusUrl);
 
   const colors = ["#ffcfcf", "#cfffe2", "#cfd1ff", "#cfe4ff", "#fff4cc"];

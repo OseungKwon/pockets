@@ -35,6 +35,7 @@ const useHistory = (topSites) => {
           )
           .catch((e) => console.log(e));
       }
+      console.log("data", data);
 
       setArr(data);
     }
@@ -42,7 +43,7 @@ const useHistory = (topSites) => {
       fetchData();
     }
   }, [topSites]);
-
+  console.log("arr", [...arr], arr.length);
   return [arr, createPie];
 };
 
